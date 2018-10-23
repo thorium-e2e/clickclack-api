@@ -94,7 +94,7 @@ app.put("/clips/:id", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to update clip");
     } else {
-      res.status(204).end();
+      res.status(204).json(doc);
     }
   });
 });

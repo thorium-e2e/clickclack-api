@@ -1,7 +1,7 @@
 <div class = "row">
   <div class="col-md-6">
     <h2>
-      Contacts
+      Clips
     </h2>
   </div>
   <div class="col-md-3">
@@ -15,9 +15,9 @@
 <div class="container">
   <table class="table table-hover">
     <tbody>
-      <tr ng-repeat="contact in contacts | orderBy:'lastName'" style="cursor:pointer">
+      <tr ng-repeat="clip in clips | orderBy:'name'" style="cursor:pointer">
         <td>
-          <a ng-href="#/contact/{{contact._id}}">{{ contact.firstName }} {{ contact.lastName }}</a>
+          <a ng-href="#/clips/{{clip._id}}">{{ clip.name }}</a>
         </td>
       </tr>
     </tbody>

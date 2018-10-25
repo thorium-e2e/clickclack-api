@@ -4,12 +4,11 @@
   "description": "A REST API sample",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/apothuaud/perso/nodejs/myclips.git"
+    "url": "https://gitlab.com/apothuaud/perso/apis/myclips.git"
   },
   "keywords": [
     "MEAN",
@@ -20,12 +19,13 @@
   "author": "Adrian Pothuaud",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/apothuaud/perso/nodejs/myclips/issues"
+    "url": "https://gitlab.com/apothuaud/perso/apis/myclips/issues"
   },
-  "homepage": "https://gitlab.com/apothuaud/perso/nodejs/myclips/",
+  "homepage": "https://gitlab.com/apothuaud/perso/apis/myclips/",
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "mongodb": "^2.0.43"
-  }
+  },
+  "devDependencies": {}
 }

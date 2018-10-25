@@ -1,20 +1,32 @@
-var express = require("express");
+// Dependencies
+var express = require("express"); // router
 var path = require("path");
 var bodyParser = require("body-parser");
-var mongodb = require("mongodb");
+var mongodb = require("mongodb"); // db
 var ObjectID = mongodb.ObjectID;
 
-var CLIPS_COLLECTION = "clips";
+// Db URI
+// MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/myclips"
+MONGODB_URI = "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
+
+// Collections
+// Free form data
+var CLICKS_COLLECTION = "clicks";
+var CLACKS_COLLECTION = "clacks";
+// Realistic data
+var USERS_COLLECTION = "users";
+var PRODUCTS_COLLECTION = "products";
+var COMMANDS_COLLECTION = "commands";
 
 var app = express();
-app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.json());
+app.use(express.static(__dirname + "/public")); // "/" endpoint = Simple UI with presentation and instructions
+app.use(bodyParser.json()); // api data format
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+mongodb.MongoClient.connect(MONGODB_URI, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -31,7 +43,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   });
 });
 
-// CONTACTS API ROUTES BELOW
+// API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
@@ -39,70 +51,128 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
-/*  "/clips"
- *    GET: finds all clips
- *    POST: creates a new clip
+/*  "/clicks"
+ *    GET: finds all clicks
+ *    POST: creates a new click
  */
 
-app.get("/clips", function(req, res) {
-  db.collection(CLIPS_COLLECTION).find({}).toArray(function(err, docs) {
+app.get("/clicks", function(req, res) {
+  db.collection(CLICKS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
+      handleError(res, err.message, "Failed to get clicks.");
     } else {
       res.status(200).json(docs);
     }
   });
 });
 
-app.post("/clips", function(req, res) {
-  var newClip = req.body;
-
-  if (!(req.body.name || req.body.description)) {
-    handleError(res, "Invalid user input", "Must provide a name and description.", 400);
-  }
-
-  db.collection(CLIPS_COLLECTION).insertOne(newClip, function(err, doc) {
+app.post("/clicks", function(req, res) {
+  var newClick = req.body;
+  db.collection(CLICKS_COLLECTION).insertOne(newClick, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to create new clip.");
+      handleError(res, err.message, "Failed to create new click.");
     } else {
       res.status(201).json(doc.ops[0]);
     }
   });
 });
 
-/*  "/clips/:id"
- *    GET: find clip by id
- *    PUT: update clip by id
- *    DELETE: deletes clip by id
+/*  "/clicks/:id"
+ *    GET: find click by id
+ *    PUT: update click by id
+ *    DELETE: deletes click by id
  */
 
-app.get("/clips/:id", function(req, res) {
-  db.collection(CLIPS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+app.get("/clicks/:id", function(req, res) {
+  db.collection(CLICKS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to get clip");
+      handleError(res, err.message, "Failed to get click");
     } else {
       res.status(200).json(doc);
     }
   });
 });
 
-app.put("/clips/:id", function(req, res) {
+app.put("/clicks/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
-
-  db.collection(CLIPS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(CLICKS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to update clip");
+      handleError(res, err.message, "Failed to update click");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.delete("/clicks/:id", function(req, res) {
+  db.collection(CLICKS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete click");
     } else {
       res.status(204).end();
     }
   });
 });
 
-app.delete("/clips/:id", function(req, res) {
-  db.collection(CLIPS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+/*  "/clacks"
+ *    GET: finds all clacks
+ *    POST: creates a new clack
+ */
+
+app.get("/clacks", function(req, res) {
+  db.collection(CLACKS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to delete clip");
+      handleError(res, err.message, "Failed to get clacks.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/clacks", function(req, res) {
+  var newClack = req.body;
+  db.collection(CLACKS_COLLECTION).insertOne(newClack, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new clack.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+/*  "/clacks/:id"
+ *    GET: find clack by id
+ *    PUT: update clack by id
+ *    DELETE: deletes clack by id
+ */
+
+app.get("/clacks/:id", function(req, res) {
+  db.collection(CLACKS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get clack");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.put("/clacks/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+  db.collection(CLACKS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update clack");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.delete("/clacks/:id", function(req, res) {
+  db.collection(CLACKS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete clack");
     } else {
       res.status(204).end();
     }

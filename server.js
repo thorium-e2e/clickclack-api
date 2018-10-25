@@ -7,8 +7,8 @@ var ObjectID = mongodb.ObjectID;
 var pretty = require('express-prettify');
  
 // Db URI
-// MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/myclips"
-MONGODB_URI = "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
+MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/myclips"
+// MONGODB_URI = "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
 
 // Collections
 // Free form data
@@ -177,6 +177,39 @@ app.delete("/clacks/:id", function(req, res) {
       handleError(res, err.message, "Failed to delete clack");
     } else {
       res.status(204).end();
+    }
+  });
+});
+
+/*  "/users"
+ *    GET: finds all users
+ *    POST: creates a new user
+ */
+
+app.get("/users", function(req, res) {
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get users.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/users", function(req, res) {
+  var newUser = req.body;
+  // db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
+  //   if (err) {
+  //     handleError(res, err.message, "Failed to create new user.");
+  //   } else {
+  //     res.status(201).json(doc.ops[0]);
+  //   }
+  // });
+  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get users.");
+    } else {
+      res.status(200).json(docs);
     }
   });
 });

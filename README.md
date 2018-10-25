@@ -1,29 +1,30 @@
-#ClickClack API
+
+# ClickClack API
 
 >ClickClack
 >REST API Sample by Adrian Pothuaud
 >started 10/2018
 
-#Project
+# Project
 
-##Follow on Trello
+## Follow on Trello
 
-[Trello](https://trello.com/b/wOOQWZMS/sample-api)
+Go to => [Trello](https://trello.com/b/wOOQWZMS/sample-api)
 
-##Follow on Slack
+## Follow on Slack
 
-[Slack](https://clickclack-api.slack.com/messages)
+Go to => [Slack](https://clickclack-api.slack.com/messages)
 
-#Content
+# Content
 
-##Sample purpose
+## Sample purpose
 
 This API provides free form data CRUD operations via the following endpoints:
 
 - /clicks
 - /clacks
 
-##Main purpose
+## Main purpose
 
 For sample purpose, this API allows:
 
@@ -37,10 +38,14 @@ There is not authentication system for this API.
 This API data is not sensible.
 Data stored as a MongoDB(NoSQL) db via mLab providing 500mb storage for free.
 
-##Users
+## Users
 
+### expected attributes
 
-##Products
+## Products
 
+### expected attributes
 
-##Commands
+## Commands
+
+### expected attributes

@@ -5,9 +5,9 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb"); // db
 var ObjectID = mongodb.ObjectID;
 var pretty = require('express-prettify');
- 
+
 // Db URI
-MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/myclips"
+MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/clickclack"
 // MONGODB_URI = "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
 
 // Collections

@@ -4,7 +4,8 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb"); // db
 var ObjectID = mongodb.ObjectID;
-
+var pretty = require('express-prettify');
+ 
 // Db URI
 // MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/myclips"
 MONGODB_URI = "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
@@ -21,6 +22,7 @@ var COMMANDS_COLLECTION = "commands";
 var app = express();
 app.use(express.static(__dirname + "/public")); // "/" endpoint = Simple UI with presentation and instructions
 app.use(bodyParser.json()); // api data format
+app.use(pretty({ query: 'pretty' }));
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;

@@ -7,8 +7,10 @@ var ObjectID = mongodb.ObjectID;
 var pretty = require('express-prettify');
 
 // Db URI
-MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/clickclack"
-// MONGODB_URI = "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
+MONGODB_URI = process.env.MONGODB_URI
+|| "mongodb://localhost:27017/clickclack"
+// MONGODB_URI =
+// "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
 
 // Collections
 // Free form data
@@ -20,11 +22,14 @@ var PRODUCTS_COLLECTION = "products";
 var COMMANDS_COLLECTION = "commands";
 
 var app = express();
-app.use(express.static(__dirname + "/public")); // "/" endpoint = Simple UI with presentation and instructions
+// "/" endpoint = Simple UI with presentation and instructions
+app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json()); // api data format
 app.use(pretty({ query: 'pretty' }));
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
+// Create a database variable
+// outside of the database connection callback
+// to reuse the connection pool in your app.
 var db;
 
 // Connect to the database before starting the application server.
@@ -59,7 +64,8 @@ function handleError(res, reason, message, code) {
  */
 
 app.get("/clicks", function(req, res) {
-  db.collection(CLICKS_COLLECTION).find({}).toArray(function(err, docs) {
+  db.collection(CLICKS_COLLECTION).find({}).toArray(
+    function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get clicks.");
     } else {
@@ -70,7 +76,8 @@ app.get("/clicks", function(req, res) {
 
 app.post("/clicks", function(req, res) {
   var newClick = req.body;
-  db.collection(CLICKS_COLLECTION).insertOne(newClick, function(err, doc) {
+  db.collection(CLICKS_COLLECTION).insertOne(newClick,
+    function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new click.");
     } else {
@@ -86,7 +93,9 @@ app.post("/clicks", function(req, res) {
  */
 
 app.get("/clicks/:id", function(req, res) {
-  db.collection(CLICKS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  db.collection(CLICKS_COLLECTION).findOne(
+    { _id: new ObjectID(req.params.id) },
+    function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get click");
     } else {
@@ -98,7 +107,9 @@ app.get("/clicks/:id", function(req, res) {
 app.put("/clicks/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
-  db.collection(CLICKS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(CLICKS_COLLECTION).updateOne(
+    {_id: new ObjectID(req.params.id)}, updateDoc,
+    function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update click");
     } else {
@@ -108,7 +119,8 @@ app.put("/clicks/:id", function(req, res) {
 });
 
 app.delete("/clicks/:id", function(req, res) {
-  db.collection(CLICKS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(CLICKS_COLLECTION).deleteOne(
+    {_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete click");
     } else {
@@ -123,7 +135,8 @@ app.delete("/clicks/:id", function(req, res) {
  */
 
 app.get("/clacks", function(req, res) {
-  db.collection(CLACKS_COLLECTION).find({}).toArray(function(err, docs) {
+  db.collection(CLACKS_COLLECTION).find({}).toArray(
+    function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get clacks.");
     } else {
@@ -134,9 +147,11 @@ app.get("/clacks", function(req, res) {
 
 app.post("/clacks", function(req, res) {
   var newClack = req.body;
-  db.collection(CLACKS_COLLECTION).insertOne(newClack, function(err, doc) {
+  db.collection(CLACKS_COLLECTION).insertOne(newClack,
+    function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to create new clack.");
+      handleError(res, err.message,
+        "Failed to create new clack.");
     } else {
       res.status(201).json(doc.ops[0]);
     }
@@ -150,7 +165,8 @@ app.post("/clacks", function(req, res) {
  */
 
 app.get("/clacks/:id", function(req, res) {
-  db.collection(CLACKS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  db.collection(CLACKS_COLLECTION).findOne(
+    { _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get clack");
     } else {
@@ -162,7 +178,9 @@ app.get("/clacks/:id", function(req, res) {
 app.put("/clacks/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
-  db.collection(CLACKS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(CLACKS_COLLECTION).updateOne(
+    {_id: new ObjectID(req.params.id)}, updateDoc,
+    function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update clack");
     } else {
@@ -172,7 +190,8 @@ app.put("/clacks/:id", function(req, res) {
 });
 
 app.delete("/clacks/:id", function(req, res) {
-  db.collection(CLACKS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(CLACKS_COLLECTION).deleteOne(
+    {_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete clack");
     } else {
@@ -187,7 +206,8 @@ app.delete("/clacks/:id", function(req, res) {
  */
 
 app.get("/users", function(req, res) {
-  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+  db.collection(USERS_COLLECTION).find({}).toArray(
+    function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get users.");
     } else {
@@ -198,14 +218,8 @@ app.get("/users", function(req, res) {
 
 app.post("/users", function(req, res) {
   var newUser = req.body;
-  // db.collection(USERS_COLLECTION).insertOne(newUser, function(err, doc) {
-  //   if (err) {
-  //     handleError(res, err.message, "Failed to create new user.");
-  //   } else {
-  //     res.status(201).json(doc.ops[0]);
-  //   }
-  // });
-  db.collection(USERS_COLLECTION).find({}).toArray(function(err, docs) {
+  db.collection(USERS_COLLECTION).find({}).toArray(
+    function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get users.");
     } else {

@@ -1,0 +1,770 @@
+{
+	"info": {
+		"_postman_id": "36a118be-7934-4fef-a5e5-4734b812db08",
+		"name": "ClickClack",
+		"description": "https://clickclack-api.herokuapp.com/\n\nHeroku\nNodeJS\nmLab\n\nREST API for training purpose\n\nWritten by Adrian Pothuaud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "clacks",
+			"item": [
+				{
+					"name": "End2End",
+					"item": [
+						{
+							"name": "list clacks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8c27c43d-3db1-49d0-8681-4b7d9965c993",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											" ",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// set clip id for further tests",
+											"pm.test(\"Set clacks id for further tests\", function() {",
+											"    pm.environment.set(\"testClackID\", pm.response.json()[0]._id);",
+											"})",
+											"",
+											"// set nb clips for further tests",
+											"pm.test(\"Set clack nb for further tests\", function() {",
+											"    pm.environment.set(\"testNbClacksBefore\", pm.response.json().length);",
+											"})",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view a particular clack",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c48319b0-a074-4fbc-afd6-c828b8a32c81",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											"",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks/{{testClackID}}",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks",
+										"{{testClackID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create clack",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "14258e58-693b-42c0-b57a-24b630601408",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											" ",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// set clip id for further tests",
+											"pm.test(\"Set new clacks id for further tests\", function() {",
+											"    pm.environment.set(\"testNewClackID\", pm.response.json()._id);",
+											"})",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"POSTMAN - new clacks\",\n\t\"description\": \"POSTMAN\",\n\t\"weight\": 50\n}"
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list clacks 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d49633b8-8fb8-477b-92a4-b14ede5d2bd1",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											" ",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// verify nb clips + 1",
+											"pm.test(\"Verify clacks number\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.length).to.be.eql(pm.environment.get(\"testNbClacksBefore\") + 1);",
+											"})",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update clack",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1faca3dc-5902-407e-a313-b3b8b3b657c6",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											"",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"key\": \"POSTMAN - new clip\",\n\t\"value\": \"UPDATED\"\n}"
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks/{{testClackID}}",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks",
+										"{{testClackID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view a particular clack 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c48319b0-a074-4fbc-afd6-c828b8a32c81",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											"",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks/{{testClackID}}",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks",
+										"{{testClackID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete clack",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6efbf3b5-9a6c-43e2-a740-8708bcaacbab",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											" ",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks/{{testClackID}}",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks",
+										"{{testClackID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list clacks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "126fab31-5a69-4a0a-833f-b0fbccf36702",
+										"exec": [
+											"/**",
+											" * Author: Adrian Pothuaud",
+											" **/",
+											" ",
+											"// check response time",
+											"pm.test(\"Response time is less than 500ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);",
+											"});",
+											"",
+											"// check status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// verify nb clips + 1",
+											"pm.test(\"Verify clacks number\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.length).to.be.eql(pm.environment.get(\"testNbClacksBefore\"));",
+											"})",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{apiUri}}/clacks",
+									"host": [
+										"{{apiUri}}"
+									],
+									"path": [
+										"clacks"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "{{apiUri}}/clacks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c27c43d-3db1-49d0-8681-4b7d9965c993",
+								"exec": [
+									"/**",
+									" * Author: Adrian Pothuaud",
+									" **/",
+									" ",
+									"// check response time",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"// check status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// set clip id for further tests",
+									"pm.test(\"Set clacks id for further tests\", function() {",
+									"    pm.environment.set(\"testClackID\", pm.response.json()[0]._id);",
+									"})",
+									"",
+									"// set nb clips for further tests",
+									"pm.test(\"Set clack nb for further tests\", function() {",
+									"    pm.environment.set(\"testNbClacksBefore\", pm.response.json().length);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUri}}/clacks",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"clacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{apiUri}}/clacks/clackID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c48319b0-a074-4fbc-afd6-c828b8a32c81",
+								"exec": [
+									"/**",
+									" * Author: Adrian Pothuaud",
+									" **/",
+									"",
+									"// check response time",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"// check status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUri}}/clacks/{{testClackID}}",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"clacks",
+								"{{testClackID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{apiUri}}/clacks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14258e58-693b-42c0-b57a-24b630601408",
+								"exec": [
+									"/**",
+									" * Author: Adrian Pothuaud",
+									" **/",
+									" ",
+									"// check response time",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"// check status code",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// set clip id for further tests",
+									"pm.test(\"Set new clacks id for further tests\", function() {",
+									"    pm.environment.set(\"testNewClackID\", pm.response.json()._id);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"POSTMAN - new clacks\",\n\t\"description\": \"POSTMAN\",\n\t\"weight\": 50\n}"
+						},
+						"url": {
+							"raw": "{{apiUri}}/clacks",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"clacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{apiUri}}/clacks/clackID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1faca3dc-5902-407e-a313-b3b8b3b657c6",
+								"exec": [
+									"/**",
+									" * Author: Adrian Pothuaud",
+									" **/",
+									"",
+									"// check response time",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"// check status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"key\": \"POSTMAN - new clip\",\n\t\"value\": \"UPDATED\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUri}}/clacks/{{testClackID}}",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"clacks",
+								"{{testClackID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{apiUri}}/clacks/clackID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6efbf3b5-9a6c-43e2-a740-8708bcaacbab",
+								"exec": [
+									"/**",
+									" * Author: Adrian Pothuaud",
+									" **/",
+									" ",
+									"// check response time",
+									"pm.test(\"Response time is less than 500ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"// check status code",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{apiUri}}/clacks/5bd2302f8c47bbdcb22bf667",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"clacks",
+								"5bd2302f8c47bbdcb22bf667"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9ae2f46c-9007-41a5-af49-bd2811e95532",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1b690cb3-f3c4-485b-bfdf-8a60d927fba0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -18,8 +18,8 @@ debug("MONGODB_URI is " + MONGODB_URI);
 
 // Collections
 // Free form data
-var CLICKS_COLLECTION = "clicks";
-// var CLACKS_COLLECTION = "clacks";
+// var CLICKS_COLLECTION = "clicks";
+var CLACKS_COLLECTION = "clacks";
 // // Real data
 // var USERS_COLLECTION = "users";
 // var PRODUCTS_COLLECTION = "products";

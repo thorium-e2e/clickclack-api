@@ -4,7 +4,8 @@
   "description": "A REST API sample",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "debug": "DEBUG=clickclack-api nodemon"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,7 @@
     "express-prettify": "^0.1.1",
     "mongodb": "^2.0.43"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "latest"
+  }
 }

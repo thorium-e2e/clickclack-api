@@ -5,23 +5,29 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb"); // db
 var ObjectID = mongodb.ObjectID;
 var pretty = require('express-prettify');
+var debug = require('debug')('clickclack-api');
+
+/** ENVIRONMENT **/
+
+// Application PORT
+PORT = process.env.PORT || 5000;
 
 // Db URI
-MONGODB_URI = process.env.MONGODB_URI
-|| "mongodb://localhost:27017/clickclack"
-// MONGODB_URI =
-// "mongodb://master:master123@ds239873.mlab.com:39873/myclips"
+MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/clickclack"
+debug("MONGODB_URI is " + MONGODB_URI);
 
 // Collections
 // Free form data
 var CLICKS_COLLECTION = "clicks";
-var CLACKS_COLLECTION = "clacks";
-// Realistic data
-var USERS_COLLECTION = "users";
-var PRODUCTS_COLLECTION = "products";
-var COMMANDS_COLLECTION = "commands";
+// var CLACKS_COLLECTION = "clacks";
+// // Real data
+// var USERS_COLLECTION = "users";
+// var PRODUCTS_COLLECTION = "products";
+// var COMMENTS_COLLECTION = "comments";
+// var COMMANDS_COLLECTION = "commands";
 
 var app = express();
+
 // "/" endpoint = Simple UI with presentation and instructions
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json()); // api data format
@@ -41,111 +47,43 @@ mongodb.MongoClient.connect(MONGODB_URI, function (err, database) {
 
   // Save database object from the callback for reuse.
   db = database;
-  console.log("Database connection ready");
+  debug("Database connection is ready");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 5000, function () {
+  var server = app.listen(PORT, function () {
     var port = server.address().port;
-    console.log("App now running on port", port);
+    debug("App now running on port", port);
   });
 });
-
-// API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
-  console.log("ERROR: " + reason);
+  debug("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
 }
 
-/*  "/clicks"
- *    GET: finds all clicks
- *    POST: creates a new click
- */
-
-app.get("/clicks", function(req, res) {
-  db.collection(CLICKS_COLLECTION).find({}).toArray(
-    function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get clicks.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
-
-app.post("/clicks", function(req, res) {
-  var newClick = req.body;
-  db.collection(CLICKS_COLLECTION).insertOne(newClick,
-    function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to create new click.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
-
-/*  "/clicks/:id"
- *    GET: find click by id
- *    PUT: update click by id
- *    DELETE: deletes click by id
- */
-
-app.get("/clicks/:id", function(req, res) {
-  db.collection(CLICKS_COLLECTION).findOne(
-    { _id: new ObjectID(req.params.id) },
-    function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to get click");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
-
-app.put("/clicks/:id", function(req, res) {
-  var updateDoc = req.body;
-  delete updateDoc._id;
-  db.collection(CLICKS_COLLECTION).updateOne(
-    {_id: new ObjectID(req.params.id)}, updateDoc,
-    function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to update click");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
-
-app.delete("/clicks/:id", function(req, res) {
-  db.collection(CLICKS_COLLECTION).deleteOne(
-    {_id: new ObjectID(req.params.id)}, function(err, result) {
-    if (err) {
-      handleError(res, err.message, "Failed to delete click");
-    } else {
-      res.status(204).end();
-    }
-  });
-});
+// API ROUTES BELOW
 
 /*  "/clacks"
  *    GET: finds all clacks
  *    POST: creates a new clack
  */
 
-app.get("/clacks", function(req, res) {
-  db.collection(CLACKS_COLLECTION).find({}).toArray(
-    function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get clacks.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
+ app.get("/clacks", function(req, res) {
+   debug("server receives a request", "GET /clacks");
+   db.collection(CLACKS_COLLECTION).find({}).toArray(
+     function(err, docs) {
+       if (err) {
+         handleError(res, err.message, "Failed to get clacks.");
+       } else {
+         debug("server interacts with database", "Found " + docs.length + " documents");
+         res.status(200).json(docs);
+       }
+     });
+ })
 
 app.post("/clacks", function(req, res) {
+  debug("server receives a request", "POST /clacks with body :\n" + JSON.stringify(req.body));
   var newClack = req.body;
   db.collection(CLACKS_COLLECTION).insertOne(newClack,
     function(err, doc) {
@@ -153,6 +91,7 @@ app.post("/clacks", function(req, res) {
       handleError(res, err.message,
         "Failed to create new clack.");
     } else {
+      debug("server interacts with database", "Inserted 1 document");
       res.status(201).json(doc.ops[0]);
     }
   });
@@ -165,17 +104,20 @@ app.post("/clacks", function(req, res) {
  */
 
 app.get("/clacks/:id", function(req, res) {
+  debug("server receives a request", "GET /clacks/" + req.params.id);
   db.collection(CLACKS_COLLECTION).findOne(
     { _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get clack");
     } else {
+      debug("server interacts with database", "Found 1 document");
       res.status(200).json(doc);
     }
   });
 });
 
 app.put("/clacks/:id", function(req, res) {
+  debug("server receives a request", "GET /clacks/" + req.params.id + " with body :\n" + JSON.stringify(req.body));
   var updateDoc = req.body;
   delete updateDoc._id;
   db.collection(CLACKS_COLLECTION).updateOne(
@@ -184,46 +126,125 @@ app.put("/clacks/:id", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to update clack");
     } else {
+      debug("server interacts with database", "Updated 1 document");
       res.status(200).json(doc);
     }
   });
 });
 
 app.delete("/clacks/:id", function(req, res) {
+  debug("server receives a request", "DELETE /clicks/" + req.params.id);
   db.collection(CLACKS_COLLECTION).deleteOne(
     {_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete clack");
     } else {
+      debug("server interacts with database", "Deleted 1 document");
       res.status(204).end();
     }
   });
 });
 
+// /*  "/clicks"
+//  *    GET: finds all clicks
+//  *    POST: creates a new click
+//  */
+//
+// app.get("/clicks", function(req, res) {
+//   debug("server receives a request", "GET /clicks");
+//   db.collection(CLICKS_COLLECTION).find({}).toArray(
+//     function(err, docs) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to get clicks.");
+//     } else {
+//       res.status(200).json(docs);
+//     }
+//   });
+// });
+//
+// app.post("/clicks", function(req, res) {
+//   debug("server receives a request", "POST /clicks with body :\n" + req.body);
+//   var newClick = req.body;
+//   db.collection(CLICKS_COLLECTION).insertOne(newClick,
+//     function(err, doc) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to create new click.");
+//     } else {
+//       res.status(201).json(doc.ops[0]);
+//     }
+//   });
+// });
+//
+// /*  "/clicks/:id"
+//  *    GET: find click by id
+//  *    PUT: update click by id
+//  *    DELETE: deletes click by id
+//  */
+//
+// app.get("/clicks/:id", function(req, res) {
+//   debug("server receives a request", "GET /clicks/" + req.params.id);
+//   db.collection(CLICKS_COLLECTION).findOne(
+//     { _id: new ObjectID(req.params.id) },
+//     function(err, doc) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to get click");
+//     } else {
+//       res.status(200).json(doc);
+//     }
+//   });
+// });
+//
+// app.put("/clicks/:id", function(req, res) {
+//   debug("server receives a request", "GET /clicks/" + req.params.id + " with body :\n" + req.body);
+//   var updateDoc = req.body;
+//   delete updateDoc._id;
+//   db.collection(CLICKS_COLLECTION).updateOne(
+//     {_id: new ObjectID(req.params.id)}, updateDoc,
+//     function(err, doc) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to update click");
+//     } else {
+//       res.status(200).json(doc);
+//     }
+//   });
+// });
+//
+// app.delete("/clicks/:id", function(req, res) {
+//   debug("server receives a request", "DELETE /clicks/" + req.params.id);
+//   db.collection(CLICKS_COLLECTION).deleteOne(
+//     {_id: new ObjectID(req.params.id)}, function(err, result) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to delete click");
+//     } else {
+//       res.status(204).end();
+//     }
+//   });
+// });
+
 /*  "/users"
  *    GET: finds all users
  *    POST: creates a new user
  */
-
-app.get("/users", function(req, res) {
-  db.collection(USERS_COLLECTION).find({}).toArray(
-    function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get users.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
-
-app.post("/users", function(req, res) {
-  var newUser = req.body;
-  db.collection(USERS_COLLECTION).find({}).toArray(
-    function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get users.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
+//
+// app.get("/users", function(req, res) {
+//   db.collection(USERS_COLLECTION).find({}).toArray(
+//     function(err, docs) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to get users.");
+//     } else {
+//       res.status(200).json(docs);
+//     }
+//   });
+// });
+//
+// app.post("/users", function(req, res) {
+//   var newUser = req.body;
+//   db.collection(USERS_COLLECTION).find({}).toArray(
+//     function(err, docs) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to get users.");
+//     } else {
+//       res.status(200).json(docs);
+//     }
+//   });
+// });

@@ -1,8 +1,8 @@
 {
   "name": "clickclack-api",
   "description": "A REST API sample",
-  "repository": "https://gitlab.com/apothuaud/perso/apis/myclips.git",
+  "repository": "https://gitlab.com/thorium-e2e/sample-apps/clickclack/clickclack-api.git",
   "logo": "https://www.diduenjoy.com/assets/home/integrations/rest-api-logo-860fda312cc922cddb94081c1fb0c0442777b596dbae3fedada2bed7c5232193.png",
-  "keywords": ["node", "express", "angular", "MEAN", "mongodb", "REST", "API"],
+  "keywords": ["node", "express", "mongodb", "REST", "API", "JSON"],
   "addons": ["mongolab"]
 }

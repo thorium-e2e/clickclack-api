@@ -13,7 +13,8 @@ var debug = require('debug')('clickclack-api');
 PORT = process.env.PORT || 5000;
 
 // Db URI
-MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/clickclack"
+MONGODB_URI = "mongodb://node:pass123@ds147213.mlab.com:47213/rec-clickclack-db";
+// MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/clickclack"
 debug("MONGODB_URI is " + MONGODB_URI);
 
 // Collections

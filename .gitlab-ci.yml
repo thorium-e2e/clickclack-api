@@ -29,6 +29,7 @@ staging-job:
   
 production-job:
   stage: production
+  when: manual
   environment:
     name: PROD
     url: https://clickclack-api.herokuapp.com

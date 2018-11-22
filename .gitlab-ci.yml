@@ -1,13 +1,12 @@
 image: node:latest
 
 stages:
-    - build
     - test
     - staging
     - production
 
 build-job:
-  stage: build
+  stage: test
   environment:
     name: REC
     url: https://rec-clickclack-api.herokuapp.com
@@ -42,19 +41,19 @@ staging-job:
     script: echo "staging"
 
 test-unit-staging-job:
-  stage: test
+  stage: staging
   script: echo "Running unit tests in STAGING"
   
 test-int-staging-job:
-  stage: test
+  stage: staging
   script: echo "Running integration tests in STAGING"
   
 test-fun-staging-job:
-  stage: test
+  stage: staging
   script: echo "Running functional tests in STAGING"
   
 test-e2e-staging-job:
-  stage: test
+  stage: staging
   script: echo "Running end to end tests in STAGING"
   
 production-job:

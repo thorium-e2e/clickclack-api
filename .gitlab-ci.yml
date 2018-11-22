@@ -5,6 +5,9 @@ stages:
   
 build:
   stage: build
+  environment:
+    name: REC
+    url: https://rec-clickclack-api.herokuapp.com
   script: echo "Building the app"
   script: git push rec master
 
@@ -17,5 +20,8 @@ test:
 
 deploy_staging:
   stage: deploy
+  environment:
+    name: PROD
+    url: https://clickclack-api.herokuapp.com
   script: echo "Deploy to production server"
   script: git push prod master

@@ -1,7 +1,12 @@
 image: node:latest
 
-build:
-  type: build
+stages:
+    - build
+    - test
+    - staging
+    - production
+
+build-job:
   stage: build
   image: ruby:latest
   script:
@@ -9,16 +14,17 @@ build:
     - apt-get install -y ruby-dev
     - gem install dpl
     - dpl --provider=heroku --app=clickclack-api --api-key=$HEROKU_API_KEY
-  only:
-    - master
   
-test:
+test-job:
   stage: test
   script: echo "Running tests"
   script: npm run test
+ 
+staging-job:
+    stage: staging
+    script: echo "staging"
   
-production:
-  type: deploy
+production-job:
   stage: production
   image: ruby:latest
   script:
@@ -26,7 +32,3 @@ production:
     - apt-get install -y ruby-dev
     - gem install dpl
     - dpl --provider=heroku --app=rec-clickclack-api --api-key=$HEROKU_API_KEY
-  only:
-    - master
-
-

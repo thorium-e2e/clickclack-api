@@ -1,0 +1,27 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Draft v1] - 2018-11-19
+
+### Added
+- GET Root EndPoint with simple UI to advertise on content
+- GET Clacks EndPoint with list of clacks
+- POST Clacks EndPoint a new Clack
+- GET Clacks / ID EndPoint with clack details
+- PUT Clacks / ID EndPoint update clack
+- DELETE Clacks / ID EndPoint delete clack
+
+### Changed
+None
+
+### Removed
+None
+
+### Fixed
+None
+
+## [Draft v2] - ...
+...

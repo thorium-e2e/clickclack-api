@@ -3,8 +3,6 @@ image: node:latest
 stages:
     - deploy to REC
     - test in REC
-    - deploy to STAGING
-    - test in STAGING
     - deploy to PROD
 
 build-job:
@@ -35,29 +33,6 @@ test-e2e-rec-job:
   stage: test in REC
   script: echo "Running end to end tests in REC"
 
-staging-job:
-    stage: deploy to STAGING
-    environment:
-        name: STAGING
-        url: https://staging-clickclack-api.herokuapp.com
-    script: echo "staging"
-
-test-unit-staging-job:
-  stage: test in STAGING
-  script: echo "Running unit tests in STAGING"
-  
-test-int-staging-job:
-  stage: test in STAGING
-  script: echo "Running integration tests in STAGING"
-  
-test-fun-staging-job:
-  stage: test in STAGING
-  script: echo "Running functional tests in STAGING"
-  
-test-e2e-staging-job:
-  stage: test in STAGING
-  script: echo "Running end to end tests in STAGING"
-  
 production-job:
   stage: deploy to PROD
   when: manual

@@ -1,12 +1,14 @@
 image: node:latest
 
 stages:
-    - test
-    - staging
-    - production
+    - deploy to REC
+    - test in REC
+    - deploy to STAGING
+    - test in STAGING
+    - deploy PROD
 
 build-job:
-  stage: test
+  stage: deploy to REC
   environment:
     name: REC
     url: https://rec-clickclack-api.herokuapp.com
@@ -18,46 +20,46 @@ build-job:
     - dpl --provider=heroku --app=clickclack-api --api-key=$HEROKU_API_KEY
   
 test-unit-rec-job:
-  stage: test
+  stage: test in REC
   script: echo "Running unit tests in REC"
   
 test-int-rec-job:
-  stage: test
+  stage: test in REC
   script: echo "Running integration tests in REC"
   
 test-fun-rec-job:
-  stage: test
+  stage: test in REC
   script: echo "Running functional tests in REC"
   
 test-e2e-rec-job:
-  stage: test
+  stage: test in REC
   script: echo "Running end to end tests in REC"
 
 staging-job:
-    stage: staging
+    stage: deploy to STAGING
     environment:
         name: STAGING
         url: https://staging-clickclack-api.herokuapp.com
     script: echo "staging"
 
 test-unit-staging-job:
-  stage: staging
+  stage: test in STAGING
   script: echo "Running unit tests in STAGING"
   
 test-int-staging-job:
-  stage: staging
+  stage: test in STAGING
   script: echo "Running integration tests in STAGING"
   
 test-fun-staging-job:
-  stage: staging
+  stage: test in STAGING
   script: echo "Running functional tests in STAGING"
   
 test-e2e-staging-job:
-  stage: staging
+  stage: test in STAGING
   script: echo "Running end to end tests in STAGING"
   
 production-job:
-  stage: production
+  stage: deploy to PROD
   when: manual
   environment:
     name: PROD

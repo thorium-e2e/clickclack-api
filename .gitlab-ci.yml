@@ -5,7 +5,7 @@ stages:
     - test in REC
     - deploy to STAGING
     - test in STAGING
-    - deploy PROD
+    - deploy to PROD
 
 build-job:
   stage: deploy to REC

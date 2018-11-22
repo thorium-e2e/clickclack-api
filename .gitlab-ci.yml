@@ -1,0 +1,21 @@
+stages:
+  - build
+  - test
+  - deploy
+  
+build:
+  stage: build
+  script: echo "Building the app"
+  script: git push rec master
+
+test:
+  stage: test
+  script: echo "Running tests"
+  script: npm run test
+
+
+
+deploy_staging:
+  stage: deploy
+  script: echo "Deploy to production server"
+  script: git push prod master

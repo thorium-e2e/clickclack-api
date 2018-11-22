@@ -1,4 +1,6 @@
 
+[![pipeline status](https://gitlab.com/thorium-e2e/sample-apps/clickclack/clickclack-api/badges/master/pipeline.svg)](https://gitlab.com/thorium-e2e/sample-apps/clickclack/clickclack-api/commits/master)
+
 # ClickClack API
 
 >ClickClack

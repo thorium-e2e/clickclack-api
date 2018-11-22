@@ -9,6 +9,7 @@ build:
     name: REC
     url: https://rec-clickclack-api.herokuapp.com
   script: echo "Building the app"
+  script: git remote add rec https://git.heroku.com/rec-clickclack-api.git
   script: git push rec master
 
 test:
@@ -24,4 +25,5 @@ deploy_staging:
     name: PROD
     url: https://clickclack-api.herokuapp.com
   script: echo "Deploy to production server"
+  script: git remote add prod https://git.heroku.com/clickclack-api.git
   script: git push prod master

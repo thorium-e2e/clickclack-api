@@ -18,14 +18,44 @@ build-job:
     - gem install dpl
     - dpl --provider=heroku --app=clickclack-api --api-key=$HEROKU_API_KEY
   
-test-job:
+test-unit-rec-job:
   stage: test
-  script: echo "Running tests"
-  script: npm run test
- 
+  script: echo "Running unit tests in REC"
+  
+test-int-rec-job:
+  stage: test
+  script: echo "Running integration tests in REC"
+  
+test-fun-rec-job:
+  stage: test
+  script: echo "Running functional tests in REC"
+  
+test-e2e-rec-job:
+  stage: test
+  script: echo "Running end to end tests in REC"
+
 staging-job:
     stage: staging
+    environment:
+        name: STAGING
+        url: https://staging-clickclack-api.herokuapp.com
     script: echo "staging"
+
+test-unit-staging-job:
+  stage: test
+  script: echo "Running unit tests in STAGING"
+  
+test-int-staging-job:
+  stage: test
+  script: echo "Running integration tests in STAGING"
+  
+test-fun-staging-job:
+  stage: test
+  script: echo "Running functional tests in STAGING"
+  
+test-e2e-staging-job:
+  stage: test
+  script: echo "Running end to end tests in STAGING"
   
 production-job:
   stage: production

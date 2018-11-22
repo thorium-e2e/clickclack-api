@@ -8,6 +8,9 @@ stages:
 
 build-job:
   stage: build
+  environment:
+    name: REC
+    url: https://rec-clickclack-api.herokuapp.com
   image: ruby:latest
   script:
     - apt-get update -qy
@@ -26,6 +29,9 @@ staging-job:
   
 production-job:
   stage: production
+  environment:
+    name: PROD
+    url: https://clickclack-api.herokuapp.com
   image: ruby:latest
   script:
     - apt-get update -qy

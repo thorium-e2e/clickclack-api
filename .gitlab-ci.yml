@@ -1,29 +1,35 @@
+image: node:latest
+
 stages:
   - build
   - test
-  - deploy
-  
+  - production
+
 build:
-  stage: build
-  environment:
-    name: REC
-    url: https://rec-clickclack-api.herokuapp.com
-  script: echo "Building the app"
-  script: git remote add rec https://git.heroku.com/rec-clickclack-api.git
-  script: git push rec master
+  type: deploy
+  stage: production
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=clickclack-api --api-key=$HEROKU_API_KEY
+  only:
+    - master
+  
+production:
+  type: deploy
+  stage: production
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=rec-clickclack-api --api-key=$HEROKU_API_KEY
+  only:
+    - master
 
 test:
   stage: test
   script: echo "Running tests"
   script: npm run test
-
-
-
-deploy_staging:
-  stage: deploy
-  environment:
-    name: PROD
-    url: https://clickclack-api.herokuapp.com
-  script: echo "Deploy to production server"
-  script: git remote add prod https://git.heroku.com/clickclack-api.git
-  script: git push prod master

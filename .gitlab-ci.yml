@@ -15,7 +15,7 @@ build-job:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=clickclack-api --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=rec-clickclack-api --api-key=$HEROKU_API_KEY
   
 test-unit-rec-job:
   stage: test in REC

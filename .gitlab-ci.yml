@@ -20,7 +20,7 @@ build-job:
 trigger_build:
   stage: test in REC
   script:
-    - "curl -X POST -F token=TOKEN -F ref=REF_NAME https://gitlab.com/api/v4/projects/9571189/trigger/pipeline"
+    - "curl -X POST -F token=ebda0c52fa23f53e7afd0a9a2cb168 -F ref=clickclack-api https://gitlab.com/api/v4/projects/9571189/trigger/pipeline"
 
 production-job:
   stage: deploy to PROD

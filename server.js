@@ -133,13 +133,26 @@ app.put("/clacks/:id", function(req, res) {
 });
 
 app.delete("/clacks/:id", function(req, res) {
-  debug("server receives a request", "DELETE /clicks/" + req.params.id);
+  debug("server receives a request", "DELETE /clacks/" + req.params.id);
   db.collection(CLACKS_COLLECTION).deleteOne(
     {_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete clack");
     } else {
       debug("server interacts with database", "Deleted 1 document");
+      res.status(204).end();
+    }
+  });
+});
+
+app.delete("/clacks", function(req, res) {
+  debug("server receives a request", "DELETE /clacks");
+  db.collection(CLACKS_COLLECTION).deleteMany(
+    {}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete clacks");
+    } else {
+      debug("server interacts with database", "Deleted all documents");
       res.status(204).end();
     }
   });
